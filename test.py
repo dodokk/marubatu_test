@@ -17,7 +17,7 @@ def test(input_options: list, fname: str, message: str, *, short_mode=False):
     operation_dist = dict(zip(original_options, input_options))
 
     if short_mode:
-        random.sample(lines, 10000)
+        lines = random.sample(lines, 10000)
     
     for input_line in tqdm(lines):
         io = StringIO()
@@ -49,9 +49,9 @@ if __name__ == "__main__":
         "9",
     )
     your_end_messages = {       # please edit here!
-        "pre_win": "先行の勝ち",
-        "pos_win": "後攻の勝ち",
-        "draw": "引き分け"
+        "pre_win": "user0の勝ち",
+        "pos_win": "user1の勝ち",
+        "draw": "引き分けです"
     }
 
     # True -> only use 10000 random datas
@@ -59,9 +59,9 @@ if __name__ == "__main__":
     short_mode = True
 
     results_dir = "./results"
-    pre_win_path = os.path.join(__file__, results_dir, "pre_win.txt")
-    pos_win_path = os.path.join(__file__, results_dir, "pos_win.txt")
-    draw_path = os.path.join(__file__, results_dir, "draw.txt")
+    pre_win_path = os.path.join(os.path.dirname(__file__), results_dir, "pre_win.txt")
+    pos_win_path = os.path.join(os.path.dirname(__file__), results_dir, "pos_win.txt")
+    draw_path = os.path.join(os.path.dirname(__file__), results_dir, "draw.txt")
     
     test(your_input_options, pre_win_path, your_end_messages["pre_win"], short_mode=short_mode)
     test(your_input_options, pos_win_path, your_end_messages["pos_win"], short_mode=short_mode)

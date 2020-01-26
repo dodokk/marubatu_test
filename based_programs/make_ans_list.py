@@ -50,9 +50,9 @@ if __name__ == "__main__":
             draw_patterns.add(" ".join(operations))
 
     results_dir = "../results"
-    pre_win_path = os.path.join(__file__, results_dir, "pre_win.txt")
-    pos_win_path = os.path.join(__file__, results_dir, "pos_win.txt")
-    draw_path = os.path.join(__file__, results_dir, "draw.txt")
+    pre_win_path = os.path.join(os.path.dirname(__file__), results_dir, "pre_win.txt")
+    pos_win_path = os.path.join(os.path.dirname(__file__), results_dir, "pos_win.txt")
+    draw_path = os.path.join(os.path.dirname(__file__), results_dir, "draw.txt")
 
     with open(pre_win_path, "w") as f:
         f.writelines( "\n".join(pre_win_patterns) )
