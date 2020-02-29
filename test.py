@@ -6,26 +6,55 @@ from io import StringIO
 from unittest import mock, TestCase, main
 
 import your_file      # please edit here!
+import marubatu_sample as your_file
 
 
 class Testcase(TestCase):
+    def setUp(self):
+        self.results_dir = os.path.join(os.path.dirname(__file__), "./results")
+        self.your_input_options = (      # 入力の方法
+            "1",    # 上段の左列
+            "2",    # 上段の中列
+            "3",    # 上段の右列
+            "4",    # 中段の左列
+            "5",    # 中段の中列
+            "6",    # 中段の右列
+            "7",    # 下段の左列
+            "8",    # 下段の中列
+            "9",    # 下段の右列
+        )
+
+        self.your_end_messages = {       # ゲーム終了メッセージ
+            "pre_win": "user0の勝ち",   # 先行のプレイヤーが勝った場合
+            "pos_win": "user1の勝ち",   # 後攻のプレイヤーが勝った場合
+            "draw": "引き分けです"   # 引き分けの場合
+        }
+        
+        # 'your_func = (ファイル名).(関数名)' の形にする
+        # 'your_func = your_file.marubatu()' にはしない
+        self.your_func = your_file.marubatu_game
+
+        # True -> ランダムに1000ケースずつ選ぶ
+        # False -> 全ケース
+        self.short_mode = True
+        
     def test_preWinTest(self):
-        pre_win_path = os.path.join(results_dir, "pre_win.txt")
-        pre_win_inputs = getInputLine(your_input_options, pre_win_path, short_mode=short_mode)
-        result = test(your_func, pre_win_inputs, your_end_messages["pre_win"])
-        self.assertEqual(result, True)
+        pre_win_path = os.path.join(self.results_dir, "pre_win.txt")
+        pre_win_inputs = getInputLine(self.your_input_options, pre_win_path, short_mode=self.short_mode)
+        result = test(self.your_func, pre_win_inputs, self.your_end_messages["pre_win"])
+        self.assertTrue(result)
 
     def test_posWinTest(self):
-        pos_win_path = os.path.join(results_dir, "pos_win.txt")
-        pos_win_inputs = getInputLine(your_input_options, pos_win_path, short_mode=short_mode)
-        result = test(your_func, pos_win_inputs, your_end_messages["pos_win"])
-        self.assertEqual(result, True)
+        pos_win_path = os.path.join(self.results_dir, "pos_win.txt")
+        pos_win_inputs = getInputLine(self.your_input_options, pos_win_path, short_mode=self.short_mode)
+        result = test(self.your_func, pos_win_inputs, self.your_end_messages["pos_win"])
+        self.assertTrue(result)
 
     def test_drawTest(self):
-        draw_path = os.path.join(results_dir, "draw.txt")
-        draw_inputs = getInputLine(your_input_options, draw_path, short_mode=short_mode)
-        result = test(your_func, draw_inputs, your_end_messages["draw"])
-        self.assertEqual(result, True)
+        draw_path = os.path.join(self.results_dir, "draw.txt")
+        draw_inputs = getInputLine(self.your_input_options, draw_path, short_mode=self.short_mode)
+        result = test(self.your_func, draw_inputs, self.your_end_messages["draw"])
+        self.assertTrue(result)
 
 
 def test(your_func: 'function', input_lines: list, expected_message: str) -> bool:
@@ -60,32 +89,4 @@ def getInputLine(your_input_options: list, input_filepath: str, *, short_mode=Fa
 
 
 if __name__ == "__main__":
-    results_dir = os.path.join(os.path.dirname(__file__), "./results")
-
-    your_input_options = (      # 入力の方法
-        "1",    # 上段の左列
-        "2",    # 上段の中列
-        "3",    # 上段の右列
-        "4",    # 中段の左列
-        "5",    # 中段の中列
-        "6",    # 中段の右列
-        "7",    # 下段の左列
-        "8",    # 下段の中列
-        "9",    # 下段の右列
-    )
-
-    your_end_messages = {       # ゲーム終了メッセージ
-        "pre_win": "user0の勝ち",   # 先行のプレイヤーが勝った場合
-        "pos_win": "user1の勝ち",   # 後攻のプレイヤーが勝った場合
-        "draw": "引き分けです"   # 引き分けの場合
-    }
-    
-    # 'your_func = (ファイル名).(関数名)' の形にする
-    # 'your_func = your_file.marubatu()' にはしない
-    your_func = your_file.marubatu
-
-    # True -> ランダムに1000ケースずつ選ぶ
-    # False -> 全ケース
-    short_mode = True
-
     main()
